@@ -6,15 +6,33 @@ const form = document.querySelector('form');
 //  FETCH FUNCTIONS
 // ------------------------------------------
 // convert to json then log to console
-fetch('https://dog.ceo/api/breeds/list/all')
+fetch('https://dog.ceo/api/breeds/list')
     .then(response=> response.json())
-    .then(data  => console.log(data));
+    .then(data  => generateOptions(data.message));
+
+fetch('https://dog.ceo/api/breeds/image/random')
+    .then(response => response.json())
+    .then(data => generateImage(data.message));
 
 
 // ------------------------------------------
 //  HELPER FUNCTIONS
 // ------------------------------------------
+function generateOptions(data){
+   const options = data.map(item => `
+    <option value='${item}'>${item}</option>
+  `);
+   select.innerHTML = options;
+}
 
+function generateImage(data){
+    const html = `
+    <img src = ${data} alt=''>
+    <p>Click to view images of ${select.value}s</p>
+    `;
+    // display it to the card
+    card.innerHTML=html;
+}
 
 
 // ------------------------------------------
